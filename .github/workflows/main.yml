@@ -25,7 +25,7 @@ jobs:
         run: python main.py
 
       - name: 保存结果到云端
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: stock-data-600900
           path: stock_600900_30days.csv
