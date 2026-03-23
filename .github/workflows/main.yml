@@ -1,0 +1,31 @@
+name: Get-600900-Data
+
+on:
+  push:                   # 只要你修改代码，它就运行一次
+  workflow_dispatch:      # 允许你在页面上手动点按钮运行（最方便调试）
+  schedule:
+    - cron: '30 7 * * 1-5' # 北京时间每天 15:30 运行 (周一到周五)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+
+      - name: 安装 Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 运行我的股票脚本
+        run: python main.py
+
+      - name: 保存结果到云端
+        uses: actions/upload-artifact@v3
+        with:
+          name: stock-data-600900
+          path: stock_600900_30days.csv
