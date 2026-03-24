@@ -3,8 +3,8 @@ name: Get-600900-Data
 on:
   push:                   # 只要你修改代码，它就运行一次
   workflow_dispatch:      # 允许你在页面上手动点按钮运行（最方便调试）
-  schedule:
-    - cron: '30 7 * * 1-5' # 北京时间每天 15:30 运行 (周一到周五)
+ # schedule:
+    #- cron: '30 7 * * 1-5' # 北京时间每天 15:30 运行 (周一到周五)
 
 jobs:
   build:
