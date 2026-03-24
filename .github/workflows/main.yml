@@ -27,5 +27,5 @@ jobs:
       - name: 保存结果到云端
         uses: actions/upload-artifact@v4
         with:
-          name: stock-data-600900
-          path: stock_600900_30days.csv
+          name: stock-data-result
+          path: "*.csv"  # 这里改成通配符，只要是 csv 统统上传，最省心！
