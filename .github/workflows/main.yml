@@ -1,10 +1,19 @@
-name: Get-600900-Data
+name: Get-Stock-Data-Customizable
 
 on:
-  push:                   # 只要你修改代码，它就运行一次
-  workflow_dispatch:      # 允许你在页面上手动点按钮运行（最方便调试）
- # schedule:
-    #- cron: '30 7 * * 1-5' # 北京时间每天 15:30 运行 (周一到周五)
+  push:
+    paths:
+      - '**.py' # 仅在修改代码时触发，避免无谓运行
+  workflow_dispatch:
+    inputs:
+      stock_code:
+        description: '请输入股票代码 (例如: sh600900, sz000001)'
+        required: true
+        default: 'sh600900'
+      start_date:
+        description: '请输入起始日期 (格式: YYYY-MM-DD)'
+        required: true
+        default: '2024-09-18'
 
 jobs:
   build:
@@ -22,10 +31,14 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: 运行我的股票脚本
+        # 这里通过环境变量将输入参数传递给 Python
+        env:
+          STOCK_CODE: ${{ github.event.inputs.stock_code }}
+          START_DATE: ${{ github.event.inputs.start_date }}
         run: python main.py
 
       - name: 保存结果到云端
         uses: actions/upload-artifact@v4
         with:
           name: stock-data-result
-          path: "*.csv"  # 这里改成通配符，只要是 csv 统统上传，最省心！
+          path: "*.csv"
