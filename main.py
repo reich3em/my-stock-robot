@@ -12,7 +12,7 @@ def run_task():
     
     try:
         # 2. 获取数据 (取 1000 个交易日以确保覆盖范围足够广)
-        df = get_price(target_stock, frequency='1d', count=1000)
+        df = get_price(target_stock, frequency='1d', count=5000)
         
         if df is None or df.empty:
             print(f"未能获取到 {target_stock} 的数据，请检查代码输入是否正确。")
